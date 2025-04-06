@@ -56,13 +56,13 @@ function App() {
             </Stack>
             <Stack>
               <Stack paddingTop={2}>
-                <SLink underline="none" to="/">
+                <SLink to="/">
                   <Item>Home</Item>
                 </SLink>
-                <SLink underline="none" to="/about">
+                <SLink to="/about">
                   <Item>About</Item>
                 </SLink>
-                <SLink underline="none" to="/contact">
+                <SLink to="/contact">
                   <Item>Contact</Item>
                 </SLink>
               </Stack>
