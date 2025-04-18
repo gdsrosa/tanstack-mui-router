@@ -2,7 +2,7 @@ import { Icon, IconOwnProps, SxProps } from "@mui/material"
 
 interface CustomIconProps extends IconOwnProps {
   id: string
-  sx: SxProps
+  sx?: SxProps
 }
 
 function CustomIcon({ id, sx }: CustomIconProps) {
