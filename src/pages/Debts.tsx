@@ -9,6 +9,7 @@ import {
 } from "@mui/material"
 import { useForm } from "@tanstack/react-form"
 import { ChangeEvent } from "react"
+import { NumberFormatValues, NumericFormat } from "react-number-format"
 
 interface Debt {
   amount: string
@@ -22,6 +23,13 @@ const debt: Debt = {
   creditor: "",
   isRecurrent: false,
   notify: false,
+}
+
+const MAX_LIMIT = 10000000
+
+function isAllowed(values: NumberFormatValues, maxLimit: number) {
+  if (!values.floatValue) return false
+  return values.floatValue < maxLimit
 }
 
 function Debts() {
@@ -39,7 +47,7 @@ function Debts() {
       </Typography>
       <Box
         paddingTop={4}
-        rowGap={4}
+        rowGap={2}
         display="flex"
         flexDirection="column"
         component="form"
@@ -66,52 +74,63 @@ function Debts() {
         <Field
           name="amount"
           children={({ state, handleChange, handleBlur }) => (
-            <TextField
-              label="Amount"
-              variant="outlined"
+            <NumericFormat
               value={state.value}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 handleChange(e.target.value)
               }
               onBlur={handleBlur}
+              customInput={TextField}
+              variant="outlined"
+              thousandSeparator
+              valueIsNumericString
+              decimalScale={2}
+              decimalSeparator="."
+              allowNegative={false}
+              label="Amount"
+              prefix="€"
+              isAllowed={values => isAllowed(values, MAX_LIMIT)}
               placeholder="Enter debt value"
             />
           )}
         />
-        <Field
-          name="isRecurrent"
-          children={({ state, handleChange, handleBlur }) => (
-            <FormControlLabel
-              label="Recurrent"
-              control={
-                <Checkbox
-                  aria-label="test"
-                  color="primary"
-                  checked={state.value}
-                  onChange={e => handleChange(e.target.checked)}
-                  onBlur={handleBlur}
-                />
-              }
-            />
-          )}
-        />
-        <Field
-          name="notify"
-          children={({ state, handleChange, handleBlur }) => (
-            <FormControlLabel
-              label="Remind me monthly"
-              control={
-                <Checkbox
-                  aria-label="test"
-                  color="primary"
-                  checked={state.value}
-                  onChange={e => handleChange(e.target.checked)}
-                  onBlur={handleBlur}
-                />
-              }
-            />
-          )}
-        />
+        <Box display="flex">
+          <Field
+            name="isRecurrent"
+            children={({ state, handleChange, handleBlur }) => (
+              <FormControlLabel
+                label="Recurrent"
+                control={
+                  <Checkbox
+                    aria-label="test"
+                    color="primary"
+                    checked={state.value}
+                    onChange={e => handleChange(e.target.checked)}
+                    onBlur={handleBlur}
+                  />
+                }
+              />
+            )}
+          />
+          <Field
+            name="notify"
+            children={({ state, handleChange, handleBlur }) => (
+              <FormControlLabel
+                label="Remind me monthly"
+                control={
+                  <Checkbox
+                    aria-label="test"
+                    color="primary"
+                    checked={state.value}
+                    onChange={e => handleChange(e.target.checked)}
+                    onBlur={handleBlur}
+                  />
+                }
+              />
+            )}
+          />
+        </Box>
+
         <Button
           type="submit"
           variant="contained"
