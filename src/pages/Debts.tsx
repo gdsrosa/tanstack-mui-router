@@ -1,3 +1,5 @@
+import { useDebts } from "@/lib/hooks"
+import { Debt } from "@/types"
 import {
   Box,
   Button,
@@ -8,15 +10,11 @@ import {
   Typography,
 } from "@mui/material"
 import { useForm } from "@tanstack/react-form"
+import { useNavigate } from "@tanstack/react-router"
+
 import { ChangeEvent } from "react"
 import { NumberFormatValues, NumericFormat } from "react-number-format"
-
-interface Debt {
-  amount: string
-  creditor: string
-  isRecurrent: boolean
-  notify: boolean
-}
+import { z } from "zod"
 
 const debt: Debt = {
   amount: "",
@@ -24,8 +22,16 @@ const debt: Debt = {
   isRecurrent: false,
   notify: false,
 }
-
 const MAX_LIMIT = 10000000
+
+const debtSchema = z
+  .object({
+    amount: z.string({ required_error: "Amount is required" }).min(1),
+    creditor: z.string({ required_error: "Creditor is required" }).min(1),
+    isRecurrent: z.boolean(),
+    notify: z.boolean({ required_error: "Recurrent is required" }),
+  })
+  .required({ amount: true, creditor: true })
 
 function isAllowed(values: NumberFormatValues, maxLimit: number) {
   if (!values.floatValue) return false
@@ -33,10 +39,20 @@ function isAllowed(values: NumberFormatValues, maxLimit: number) {
 }
 
 function Debts() {
+  const { setDebts } = useDebts()
+  const navigate = useNavigate()
+
   const { Field, handleSubmit, state } = useForm({
     defaultValues: debt,
+    validators: {
+      onChange: debtSchema,
+    },
     onSubmit: ({ value }) => {
-      console.log(value)
+      const result = debtSchema.safeParse(value)
+      if (result.success) {
+        setDebts(prev => [...prev, value])
+        navigate({ to: "/" })
+      }
     },
   })
 
@@ -60,6 +76,8 @@ function Debts() {
           name="creditor"
           children={({ state, handleChange, handleBlur }) => (
             <TextField
+              error={state.meta.errors.length > 0}
+              helperText={state.meta.errors[0]?.message}
               label="Creditor"
               variant="outlined"
               value={state.value}
@@ -79,6 +97,8 @@ function Debts() {
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 handleChange(e.target.value)
               }
+              error={state.meta.errors.length > 0}
+              helperText={state.meta.errors[0]?.message}
               onBlur={handleBlur}
               customInput={TextField}
               variant="outlined"
@@ -132,6 +152,7 @@ function Debts() {
         </Box>
 
         <Button
+          disabled={!state.canSubmit}
           type="submit"
           variant="contained"
           sx={{ color: "secondary.main" }}
@@ -139,7 +160,6 @@ function Debts() {
           Submit
         </Button>
       </Box>
-      <pre>{JSON.stringify(state.values, null, 2)}</pre>
     </Grid>
   )
 }
