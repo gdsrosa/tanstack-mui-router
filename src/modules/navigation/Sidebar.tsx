@@ -26,7 +26,9 @@ export default function Sidebar() {
       <Stack paddingTop={2}>
         {MENU_ITEMS.map(item => (
           <SLink key={item.id} to={item.to}>
-            <Item>{item.name}</Item>
+            <Item withIcon iconId={item.iconId}>
+              {item.name}
+            </Item>
           </SLink>
         ))}
       </Stack>

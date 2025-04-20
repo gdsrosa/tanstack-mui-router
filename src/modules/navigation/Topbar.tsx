@@ -28,7 +28,7 @@ function Topbar() {
         <CustomIcon
           id="currency_exchange"
           color="info"
-          sx={{ height: 25, width: 25 }}
+          sx={{ height: 25, width: 25, paddingLeft: 3 }}
         />
         <Typography
           component="h1"

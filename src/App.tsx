@@ -25,10 +25,10 @@ function App() {
         <Topbar />
       )}
       <Grid
-        size={9}
+        size={8}
         bgcolor="AppWorkspace"
         padding={2}
-        width={isMobile ? "100%" : "auto"}
+        sx={{ width: isMobile ? "100%" : "calc(90vw - 220px)" }}
       >
         <Outlet />
       </Grid>
