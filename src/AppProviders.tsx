@@ -3,6 +3,7 @@ import { ThemeProvider } from "@mui/material"
 import { RouterProvider, createRouter } from "@tanstack/react-router"
 
 import { QueryClientProvider } from "@tanstack/react-query"
+import { DebtsProvider } from "./context/DebtsContext"
 import { routeTree } from "./routeTree.gen"
 import queryClient from "./server/queryClient"
 
@@ -18,11 +19,13 @@ declare module "@tanstack/react-router" {
 
 function AppProviders() {
   return (
-    <ThemeProvider theme={theme}>
-      <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
-      </QueryClientProvider>
-    </ThemeProvider>
+    <DebtsProvider>
+      <ThemeProvider theme={theme}>
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+        </QueryClientProvider>
+      </ThemeProvider>
+    </DebtsProvider>
   )
 }
 
