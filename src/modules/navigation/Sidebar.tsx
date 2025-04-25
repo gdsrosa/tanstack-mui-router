@@ -1,11 +1,21 @@
 import { SLink } from "@/components/Link"
-import { Stack, Typography } from "@mui/material"
+import {
+  Collapse,
+  List,
+  ListItemButton,
+  ListItemText,
+  Stack,
+  Typography,
+} from "@mui/material"
 import Item from "./Item"
 
 import { CustomIcon } from "@/components/CustomIcon"
+import { useState } from "react"
 import { MENU_ITEMS } from "./constants"
 
 export default function Sidebar() {
+  const [open, setOpen] = useState(false)
+
   return (
     <Stack>
       <Stack direction="row" alignItems="center">
@@ -20,18 +30,50 @@ export default function Sidebar() {
           paddingLeft={2}
           color="secondary.main"
         >
-          Debto
+          TBD
         </Typography>
       </Stack>
-      <Stack paddingTop={2}>
+      <List component="nav" sx={{ paddingTop: 2 }}>
         {MENU_ITEMS.map(item => (
-          <SLink key={item.id} to={item.to}>
-            <Item withIcon iconId={item.iconId}>
-              {item.name}
-            </Item>
-          </SLink>
+          <List key={item.id} component="nav" disablePadding>
+            <SLink to={item.to}>
+              <ListItemButton
+                sx={{ padding: 0 }}
+                disableRipple
+                onClick={() => {
+                  if (item.nesteds) {
+                    setOpen(!open)
+                  }
+                }}
+              >
+                <ListItemText>
+                  <Item withIcon iconId={item.iconId}>
+                    {item.name}
+                  </Item>
+                </ListItemText>
+              </ListItemButton>
+            </SLink>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <List disablePadding>
+                {item.nesteds?.map(nested => (
+                  <SLink key={nested.id} to={nested.to}>
+                    <ListItemButton
+                      sx={{ paddingY: 0, paddingX: 2 }}
+                      disableRipple
+                    >
+                      <ListItemText>
+                        <Item withIcon iconId={nested.iconId}>
+                          {nested.name}
+                        </Item>
+                      </ListItemText>
+                    </ListItemButton>
+                  </SLink>
+                ))}
+              </List>
+            </Collapse>
+          </List>
         ))}
-      </Stack>
+      </List>
     </Stack>
   )
 }

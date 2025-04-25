@@ -1,94 +1,20 @@
-import { useDebts } from "@/lib/hooks"
-import { Debt } from "@/types"
-import {
-  Box,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Typography,
-} from "@mui/material"
-import {
-  createColumnHelper,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-} from "@tanstack/react-table"
+import { Grid, Typography } from "@mui/material"
 
-const columnHelper = createColumnHelper<Debt>()
-
-const columns = [
-  columnHelper.accessor("amount", {
-    header: "Amount",
-    cell: info => info.getValue(),
-    size: 100,
-  }),
-  columnHelper.accessor("creditor", {
-    header: "Creditor",
-    cell: info => info.getValue(),
-    size: 100,
-  }),
-  columnHelper.accessor("isRecurrent", {
-    header: "Is Recurrent",
-    cell: info => (info.getValue() ? "Yes" : "No"),
-    size: 100,
-  }),
-  columnHelper.accessor("notify", {
-    header: "Notify",
-    cell: info => (info.getValue() ? "Yes" : "No"),
-    size: 100,
-  }),
-]
-
-export default function Home() {
-  const { debts } = useDebts()
-  const table = useReactTable({
-    data: debts,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-  })
-
+function Home() {
   return (
-    <>
-      <Typography component="h2" fontSize={24} color="primary.main">
-        Your debts
+    <Grid container>
+      <Typography
+        component="h1"
+        fontWeight="bold"
+        paddingLeft={2}
+        color="primary.main"
+        variant="h4"
+        sx={{ marginBottom: 2 }}
+      >
+        Home
       </Typography>
-
-      <Box paddingTop={4}>
-        <Table component={Paper} sx={{ paddingTop: 2 }}>
-          <TableHead>
-            {table.getHeaderGroups().map(headerGroup => (
-              <tr key={headerGroup.id}>
-                {headerGroup.headers.map(column => (
-                  <th key={column.id}>
-                    {column.isPlaceholder ? null : (
-                      <div>
-                        {flexRender(
-                          column.column.columnDef.header,
-                          column.getContext(),
-                        )}
-                      </div>
-                    )}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </TableHead>
-          <TableBody>
-            {table.getRowModel().rows.map(row => (
-              <TableRow key={row.id}>
-                {row.getVisibleCells().map(cell => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </Box>
-    </>
+    </Grid>
   )
 }
+
+export default Home

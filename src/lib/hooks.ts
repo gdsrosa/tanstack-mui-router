@@ -1,4 +1,4 @@
-import DebtsContext from "@/context/DebtsContext"
+import DebtsContext from "@/modules/debts/contexts/DebtsContext"
 import { useContext } from "react"
 
 export function useDebtsContext() {

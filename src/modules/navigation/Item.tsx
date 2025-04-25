@@ -15,18 +15,19 @@ function Item({ children, sx, withIcon, iconId }: ItemProps) {
       sx={{
         ...sx,
         cursor: "pointer",
-        "&:hover, &:focus": {
-          backgroundColor: "secondary.main",
-          color: "primary.main",
-          transition: "0.2s ease-in",
-        },
         display: "flex",
         alignItems: "center",
+        "&:hover, &:focus": {
+          backgroundColor: "primary.light",
+          color: "secondary.main",
+          transition: "0.2s ease-in",
+          borderRadius: 1,
+          width: "100%",
+        },
       }}
-      padding={1}
-      borderRadius={1}
+      paddingY={1}
       color="secondary.main"
-      component="div"
+      component="span"
     >
       {withIcon && iconId ? (
         <CustomIcon id={iconId} sx={{ paddingRight: 1 }} />

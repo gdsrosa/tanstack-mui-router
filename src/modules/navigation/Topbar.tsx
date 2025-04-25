@@ -3,6 +3,7 @@ import { SLink } from "@/components/Link"
 import {
   AppBar,
   IconButton,
+  ListSubheader,
   Menu,
   MenuItem,
   Stack,
@@ -37,20 +38,18 @@ function Topbar() {
           paddingLeft={2}
           color="secondary.main"
         >
-          Debto
+          TBD
         </Typography>
         <Toolbar>
           <IconButton onClick={handleMenu}>
             <CustomIcon id="menu" />
           </IconButton>
           <Menu
-            id="menu-appbar"
             anchorEl={anchorEl}
             anchorOrigin={{
               vertical: "top",
               horizontal: "right",
             }}
-            keepMounted
             transformOrigin={{
               vertical: "top",
               horizontal: "right",
@@ -61,8 +60,13 @@ function Topbar() {
             <MenuItem>
               <SLink to="/">Home</SLink>
             </MenuItem>
+            <ListSubheader>Debts</ListSubheader>
+
             <MenuItem>
-              <SLink to="/debts">Debts</SLink>
+              <SLink to="/debts/create">Create</SLink>
+            </MenuItem>
+            <MenuItem sx={{ paddingLeft: 2 }}>
+              <SLink to="/debts">View</SLink>
             </MenuItem>
           </Menu>
         </Toolbar>

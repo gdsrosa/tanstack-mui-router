@@ -11,20 +11,27 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as DebtsImport } from './routes/debts'
 import { Route as IndexImport } from './routes/index'
+import { Route as DebtsIndexImport } from './routes/debts/index'
+import { Route as DebtsCreateImport } from './routes/debts/create'
 
 // Create/Update Routes
-
-const DebtsRoute = DebtsImport.update({
-  id: '/debts',
-  path: '/debts',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DebtsIndexRoute = DebtsIndexImport.update({
+  id: '/debts/',
+  path: '/debts/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DebtsCreateRoute = DebtsCreateImport.update({
+  id: '/debts/create',
+  path: '/debts/create',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -39,11 +46,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/debts': {
-      id: '/debts'
+    '/debts/create': {
+      id: '/debts/create'
+      path: '/debts/create'
+      fullPath: '/debts/create'
+      preLoaderRoute: typeof DebtsCreateImport
+      parentRoute: typeof rootRoute
+    }
+    '/debts/': {
+      id: '/debts/'
       path: '/debts'
       fullPath: '/debts'
-      preLoaderRoute: typeof DebtsImport
+      preLoaderRoute: typeof DebtsIndexImport
       parentRoute: typeof rootRoute
     }
   }
@@ -53,37 +67,42 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/debts': typeof DebtsRoute
+  '/debts/create': typeof DebtsCreateRoute
+  '/debts': typeof DebtsIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/debts': typeof DebtsRoute
+  '/debts/create': typeof DebtsCreateRoute
+  '/debts': typeof DebtsIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/debts': typeof DebtsRoute
+  '/debts/create': typeof DebtsCreateRoute
+  '/debts/': typeof DebtsIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/debts'
+  fullPaths: '/' | '/debts/create' | '/debts'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/debts'
-  id: '__root__' | '/' | '/debts'
+  to: '/' | '/debts/create' | '/debts'
+  id: '__root__' | '/' | '/debts/create' | '/debts/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DebtsRoute: typeof DebtsRoute
+  DebtsCreateRoute: typeof DebtsCreateRoute
+  DebtsIndexRoute: typeof DebtsIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DebtsRoute: DebtsRoute,
+  DebtsCreateRoute: DebtsCreateRoute,
+  DebtsIndexRoute: DebtsIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -97,14 +116,18 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/debts"
+        "/debts/create",
+        "/debts/"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/debts": {
-      "filePath": "debts.tsx"
+    "/debts/create": {
+      "filePath": "debts/create.tsx"
+    },
+    "/debts/": {
+      "filePath": "debts/index.tsx"
     }
   }
 }
