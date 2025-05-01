@@ -1,6 +1,6 @@
 export interface Debt {
   amount: string
   creditor: string
-  isRecurrent: boolean
+  recurrent: boolean
   notify: boolean
 }

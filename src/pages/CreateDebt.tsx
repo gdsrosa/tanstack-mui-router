@@ -1,4 +1,3 @@
-import { useDebts } from "@/lib/hooks"
 import { Debt } from "@/types"
 import {
   Box,
@@ -12,46 +11,40 @@ import {
 import { useForm } from "@tanstack/react-form"
 import { useNavigate } from "@tanstack/react-router"
 
+import { createDebt } from "@/modules/debts/db/actions"
 import { ChangeEvent } from "react"
-import { NumberFormatValues, NumericFormat } from "react-number-format"
 import { z } from "zod"
 
 const debt: Debt = {
   amount: "",
   creditor: "",
-  isRecurrent: false,
+  recurrent: false,
   notify: false,
 }
-const MAX_LIMIT = 10000000
 
 const debtSchema = z
   .object({
-    amount: z.string({ required_error: "Amount is required" }).min(1),
-    creditor: z.string({ required_error: "Creditor is required" }).min(1),
-    isRecurrent: z.boolean(),
-    notify: z.boolean({ required_error: "Recurrent is required" }),
+    amount: z.string({ required_error: "Amount is required" }).min(2).max(20),
+    creditor: z
+      .string({ required_error: "Creditor is required" })
+      .min(1)
+      .max(20),
+    recurrent: z.boolean().nullable(),
+    notify: z.boolean().nullable(),
   })
   .required({ amount: true, creditor: true })
 
-function isAllowed(values: NumberFormatValues, maxLimit: number) {
-  if (!values.floatValue) return false
-  return values.floatValue < maxLimit
-}
-
 function Debts() {
-  const { setDebts } = useDebts()
   const navigate = useNavigate()
 
   const { Field, handleSubmit, state } = useForm({
     defaultValues: debt,
-    validators: {
-      onChange: debtSchema,
-    },
     onSubmit: ({ value }) => {
       const result = debtSchema.safeParse(value)
+
       if (result.success) {
-        setDebts(prev => [...prev, value])
-        navigate({ to: "/" })
+        createDebt(value)
+        navigate({ to: "/debts" })
       }
     },
   })
@@ -74,6 +67,12 @@ function Debts() {
       >
         <Field
           name="creditor"
+          validators={{
+            onChange: z
+              .string({ required_error: "Creditor is required" })
+              .min(2)
+              .max(20),
+          }}
           children={({ state, handleChange, handleBlur }) => (
             <TextField
               error={state.meta.errors.length > 0}
@@ -91,8 +90,15 @@ function Debts() {
         />
         <Field
           name="amount"
+          validators={{
+            onChange: z
+              .string({ required_error: "Amount is required" })
+              .min(2)
+              .max(20),
+          }}
           children={({ state, handleChange, handleBlur }) => (
-            <NumericFormat
+            <TextField
+              type="number"
               value={state.value}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 handleChange(e.target.value)
@@ -100,23 +106,15 @@ function Debts() {
               error={state.meta.errors.length > 0}
               helperText={state.meta.errors[0]?.message}
               onBlur={handleBlur}
-              customInput={TextField}
               variant="outlined"
-              thousandSeparator
-              valueIsNumericString
-              decimalScale={2}
-              decimalSeparator="."
-              allowNegative={false}
               label="Amount"
-              prefix="€"
-              isAllowed={values => isAllowed(values, MAX_LIMIT)}
               placeholder="Enter debt value"
             />
           )}
         />
         <Box display="flex">
           <Field
-            name="isRecurrent"
+            name="recurrent"
             children={({ state, handleChange, handleBlur }) => (
               <FormControlLabel
                 label="Recurrent"

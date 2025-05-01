@@ -1,4 +1,12 @@
-export const MENU_ITEMS = [
+type Menu = {
+  id: string
+  name: string
+  to?: string
+  iconId: string
+  nesteds?: Menu[]
+}
+
+export const MENU_ITEMS: Menu[] = [
   { id: "home", name: "Home", to: "/", iconId: "home" },
   {
     id: "debts",
