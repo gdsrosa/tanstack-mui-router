@@ -108,7 +108,7 @@ function Debts() {
               onBlur={handleBlur}
               variant="outlined"
               label="Amount"
-              placeholder="Enter debt value"
+              placeholder="Enter debt value in cents.. Ex: 100€ needs to be 10000"
             />
           )}
         />
