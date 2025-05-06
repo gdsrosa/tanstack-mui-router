@@ -5,9 +5,9 @@ interface CustomIconProps extends IconOwnProps {
   sx?: SxProps
 }
 
-function CustomIcon({ id, sx }: CustomIconProps) {
+function CustomIcon({ id, sx, color }: CustomIconProps) {
   return (
-    <Icon color="secondary" sx={{ ...sx }}>
+    <Icon color={color} sx={{ ...sx }}>
       {id}
     </Icon>
   )

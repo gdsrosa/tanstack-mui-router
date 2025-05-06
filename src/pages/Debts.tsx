@@ -59,13 +59,7 @@ function Debts() {
               {table.getRowModel().rows.map(row => (
                 <TableRow key={row.id}>
                   {row.getVisibleCells().map(cell => (
-                    <TableCell
-                      key={cell.id}
-                      sx={{
-                        textAlign: "center",
-                        ":&hover": { background: "red" },
-                      }}
-                    >
+                    <TableCell key={cell.id} sx={{ textAlign: "center" }}>
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),

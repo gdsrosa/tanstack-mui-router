@@ -1,4 +1,4 @@
-import { getDebts } from "@/modules/debts/db/actions"
+import { getDebts } from "@/modules/debts/db/methods"
 import { Debt } from "@/types"
 import { useEffect, useState } from "react"
 

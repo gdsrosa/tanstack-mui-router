@@ -21,7 +21,7 @@ export default function Sidebar() {
       <Stack direction="row" alignItems="center">
         <CustomIcon
           id="currency_exchange"
-          color="info"
+          color="secondary"
           sx={{ height: 25, width: 25 }}
         />
         <Typography
