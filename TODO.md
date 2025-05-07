@@ -7,10 +7,10 @@
 
 ## Given a debt I want to be able to
 
-- See the total of debts combined [PARKED]
-- integration with supabase db, perhaps add prisma(?) - consider [WON'T DO]
-- db pass 8SJO2ph5vAmfTPmg
-- Delete the debt [WIP]
+- See the total of debts combined (only amount) [DONE]
+- integration with supabase db, perhaps add prisma(?) - consider
+  - Using Realtime DB from Firebase [DONE]
+- Delete the debt [PARTIALLY DONE]
 - Be reminded within 48, 24 hour prior to due payment by email
 - Create a new recurrent debt [DONE]
 - See all the current debts in a table [DONE]
