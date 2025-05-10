@@ -26,18 +26,18 @@ function Debts() {
 
   return (
     <>
-      <Typography component="h2" fontSize={24} color="primary.main">
+      <Typography component="h2" fontSize={24} color="text.primary">
         Your debts
       </Typography>
 
       {loading ? (
-        <Typography component="p" variant="body2">
+        <Typography component="p" variant="body2" color="text.primary">
           Loading
         </Typography>
       ) : (
         <TableContainer sx={{ marginTop: 2 }}>
-          <Table sx={{ border: "1px solid", borderColor: "common.white" }}>
-            <TableHead sx={{ backgroundColor: "common.white" }}>
+          <Table sx={{ border: "1px solid", borderColor: "divider" }}>
+            <TableHead sx={{ backgroundColor: "divider" }}>
               {table.getHeaderGroups().map(headerGroup => (
                 <tr key={headerGroup.id}>
                   {headerGroup.headers.map(column => (

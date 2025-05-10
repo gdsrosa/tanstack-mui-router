@@ -36,7 +36,7 @@ function Topbar() {
           fontWeight="bold"
           fontSize={20}
           paddingLeft={2}
-          color="secondary.main"
+          color="text.primary"
         >
           TBD
         </Typography>

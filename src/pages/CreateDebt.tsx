@@ -130,6 +130,7 @@ function Debts() {
               />
             )}
           />
+
           <Field
             name="notify"
             children={({ state, handleChange, handleBlur }) => (
@@ -153,7 +154,7 @@ function Debts() {
           disabled={!state.canSubmit}
           type="submit"
           variant="contained"
-          sx={{ color: "secondary.main" }}
+          sx={{ color: "common.white", backgroundColor: "secondary.main" }}
         >
           Submit
         </Button>

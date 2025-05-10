@@ -10,7 +10,7 @@ function Home() {
       <Typography
         component="h1"
         fontWeight="bold"
-        color="primary.main"
+        color="text.primary"
         variant="h4"
         sx={{ marginBottom: 2 }}
       >

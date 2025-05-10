@@ -18,19 +18,18 @@ function Item({ children, sx, withIcon, iconId }: ItemProps) {
         display: "flex",
         alignItems: "center",
         "&:hover, &:focus": {
-          backgroundColor: "primary.light",
-          color: "secondary.main",
+          color: "common.light",
           transition: "0.2s ease-in",
           borderRadius: 1,
           width: "100%",
         },
       }}
       paddingY={1}
-      color="secondary.main"
+      color="common.white"
       component="span"
     >
       {withIcon && iconId ? (
-        <CustomIcon id={iconId} sx={{ paddingRight: 1 }} />
+        <CustomIcon color="success" id={iconId} sx={{ paddingRight: 1 }} />
       ) : null}
       {children}
     </Typography>

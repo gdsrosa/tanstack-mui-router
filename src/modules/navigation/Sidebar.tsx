@@ -21,21 +21,26 @@ export default function Sidebar() {
       <Stack direction="row" alignItems="center">
         <CustomIcon
           id="currency_exchange"
-          color="secondary"
+          color="success"
           sx={{ height: 25, width: 25 }}
         />
         <Typography
           component="h2"
           fontWeight="bold"
           paddingLeft={2}
-          color="secondary.main"
+          color="common.white"
         >
           TBD
         </Typography>
       </Stack>
       <List component="nav" sx={{ paddingTop: 2 }}>
         {MENU_ITEMS.map(item => (
-          <List key={item.id} component="nav" disablePadding>
+          <List
+            key={item.id}
+            component="nav"
+            disablePadding
+            color="common.white"
+          >
             <SLink to={item.to}>
               <ListItemButton
                 sx={{ padding: 0 }}
