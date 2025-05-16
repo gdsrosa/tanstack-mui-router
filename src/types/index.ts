@@ -1,3 +1,4 @@
+import { Dayjs } from "dayjs"
 import { ReactElement } from "react"
 
 export interface Debt {
@@ -7,4 +8,5 @@ export interface Debt {
   recurrent: boolean
   notify: boolean
   actions?: ReactElement
+  date: Dayjs
 }

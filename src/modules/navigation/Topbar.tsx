@@ -36,13 +36,13 @@ function Topbar() {
           fontWeight="bold"
           fontSize={20}
           paddingLeft={2}
-          color="text.primary"
+          color="common.white"
         >
           TBD
         </Typography>
         <Toolbar>
           <IconButton onClick={handleMenu}>
-            <CustomIcon id="menu" />
+            <CustomIcon id="menu" sx={{ color: "common.white" }} />
           </IconButton>
           <Menu
             anchorEl={anchorEl}
